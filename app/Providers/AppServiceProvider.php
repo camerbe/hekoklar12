@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\IRepositories\IArticleRepository;
+use App\Repositories\ArticleRepository;
+use App\Services\ArticleService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -12,6 +15,9 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+        $this->app->when(ArticleService::class)
+             ->needs(IArticleRepository::class)
+             ->give(ArticleRepository::class);
     }
 
     /**
