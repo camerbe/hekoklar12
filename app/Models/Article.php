@@ -51,7 +51,7 @@ class Article extends Model
         return $this->belongsTo(Typearticle::class,'fktypearticle');
     }
 
-    //protected $with = ['media'];
+    protected $with = ['media'];
     public function registerMediaCollections():void{
         $this->addMediaCollection('article')
             ->registerMediaConversions(function(Media $media){

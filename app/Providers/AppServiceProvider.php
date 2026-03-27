@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(ArticleService::class)
              ->needs(IArticleRepository::class)
              ->give(ArticleRepository::class);
+
     }
 
     /**
