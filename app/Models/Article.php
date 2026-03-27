@@ -13,7 +13,7 @@ class Article extends Model
     protected $primaryKey  = 'idarticle';
 
     protected $table='articles';
-
+    public $timestamps = false;
     protected $fillable = [
         'idarticle',
         'article',

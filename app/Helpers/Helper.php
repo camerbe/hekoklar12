@@ -23,7 +23,7 @@ class Helper
         }
 
         // URL relative → reconstruction
-        $base = 'https://www.camer.be';
+        $base = 'https://www.hekok.org';
         $src  = ltrim($src, '/');
 
         return "{$base}/{$src}";

@@ -14,7 +14,7 @@ class Typearticle extends Model
 
     protected $fillable = [
         'idtypearticle',
-        'ypearticle',
+        'typearticle',
 
     ];
 

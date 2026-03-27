@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Helpers\Helper;
+use App\Http\Resources\ArticleResource;
 use App\IRepositories\IArticleRepository;
 use App\Models\Article;
 use App\Models\Pays;
@@ -69,16 +70,18 @@ class ArticleRepository extends Repository implements IArticleRepository
 
     function getNews()
     {
+
         $cacheKey = 'news_articles';
         $cacheExpiry = now()->addDay();
-        $articles= Cache::remember($cacheKey , $cacheExpiry, function () {
-            return Article::News()
+        $articlesData= Cache::remember($cacheKey , now()->addDay(), function () {
+            $articles= Article::News()
                 ->with(['countries','typenews'])
                 ->orderByDesc('datearticle')
                 ->limit(50)
                 ->get();
+            return ArticleResource::collection($articles)->resolve();
         });
-
-        return $articles;
+        //dd($articles);
+        return $articlesData;
     }
 }
