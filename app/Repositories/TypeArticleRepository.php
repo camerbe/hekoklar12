@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Http\Resources\TypeArticleResource;
 use App\Models\Typearticle;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class TypeArticleRepository extends Repository
@@ -38,7 +40,12 @@ class TypeArticleRepository extends Repository
 
     function index()
     {
-        return parent::index();
+        $cacheKey = 'typearticles';
+        $typearticles=Cache::remember($cacheKey,now()->addDay(),function(){
+            return TypeArticleResource::collection(parent::index()->sortBy('typearticle')->values())->resolve() ;
+        });
+        return $typearticles;
+
     }
 
 }

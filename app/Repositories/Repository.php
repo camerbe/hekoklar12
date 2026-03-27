@@ -36,7 +36,7 @@ class Repository implements IRepository
     function update(array $input, $id)
     {
         $model=$this->model->findOrFail($id);
-        $model->model->update($input);
+        $model->update($input);
         return $model;
     }
 

@@ -19,7 +19,7 @@ class ArticleService
     function delete($id){
         return $this->articleRepository->delete($id);
     }
-    function findById($id){
+    function find($id){
         return $this->articleRepository->findById($id);
     }
     function update(array $input, $id){
