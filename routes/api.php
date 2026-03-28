@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\api\v1\ArticleController;
 use App\Http\Controllers\api\v1\TypeArticleController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\api\v1\TypeMessageController;
 use Illuminate\Support\Facades\Route;
 
 /*Route::get('/user', function (Request $request) {
@@ -15,8 +15,8 @@ Route::prefix('articles')->controller(ArticleController::class)->group(function 
 Route::apiResources([
     "articles"=>ArticleController::class,
     "typearticles"=>TypeArticleController::class,
-    /*"pays"=>PaysController::class,
-    "pubs"=>PubController::class,
+    "typemessages"=>TypeMessageController::class,
+    /*"pubs"=>PubController::class,
     "pubdimensions"=>PubDimensionController::class,
     "rubriques"=>RubriqueController::class,
     "sousrubriques"=>SousRubriqueController::class,

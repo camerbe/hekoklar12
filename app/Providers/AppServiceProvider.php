@@ -6,6 +6,7 @@ use App\IRepositories\IArticleRepository;
 use App\Repositories\ArticleRepository;
 use App\Repositories\Repository;
 use App\Repositories\TypeArticleRepository;
+use App\Repositories\TypeMessageRepository;
 use App\Services\ArticleService;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
              ->give(ArticleRepository::class);
 
         $this->app->bind(Repository::class,TypeArticleRepository::class);
+        $this->app->bind(Repository::class,TypeMessageRepository::class);
 
     }
 
