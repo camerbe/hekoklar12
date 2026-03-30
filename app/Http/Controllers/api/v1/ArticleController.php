@@ -25,14 +25,6 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
         $articles=$this->articleService->index();
         if ($articles){
             return response()->json([
@@ -45,6 +37,14 @@ class ArticleController extends Controller
             "success"=>false,
             "message"=>"Pas d'article trouvé"
         ],Response::HTTP_NOT_FOUND);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+
     }
 
     /**
