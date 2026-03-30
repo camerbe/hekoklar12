@@ -7,6 +7,7 @@ use App\IRepositories\IMessageRepository;
 use App\Repositories\ArticleRepository;
 use App\Repositories\MessageRepository;
 use App\Repositories\Repository;
+use App\Repositories\RoleRepository;
 use App\Repositories\TypeArticleRepository;
 use App\Repositories\TypeMessageRepository;
 use App\Services\ArticleService;
@@ -27,10 +28,14 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(Repository::class,TypeArticleRepository::class);
         $this->app->bind(Repository::class,TypeMessageRepository::class);
+        $this->app->bind(Repository::class,RoleRepository::class);
 
         $this->app->when(MessageService::class)
             ->needs(IMessageRepository::class)
             ->give(MessageRepository::class);
+
+
+
     }
 
     /**

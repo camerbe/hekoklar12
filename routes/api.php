@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\v1\ArticleController;
 use App\Http\Controllers\api\v1\MessageController;
+use App\Http\Controllers\api\v1\RoleController;
 use App\Http\Controllers\api\v1\TypeArticleController;
 use App\Http\Controllers\api\v1\TypeMessageController;
 use Illuminate\Support\Facades\Route;
@@ -21,8 +22,8 @@ Route::apiResources([
     "typearticles"=>TypeArticleController::class,
     "typemessages"=>TypeMessageController::class,
     "messages"=>MessageController::class,
-    /*"pubdimensions"=>PubDimensionController::class,
-    "rubriques"=>RubriqueController::class,
+    "roles"=>RoleController::class,
+    /*"rubriques"=>RubriqueController::class,
     "sousrubriques"=>SousRubriqueController::class,
     "stats"=>StatsController::class,
     "typepubs"=>TypePubController::class,
