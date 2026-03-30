@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\v1\ArticleController;
+use App\Http\Controllers\api\v1\MembreController;
 use App\Http\Controllers\api\v1\MessageController;
 use App\Http\Controllers\api\v1\RoleController;
 use App\Http\Controllers\api\v1\TypeArticleController;
@@ -17,14 +18,17 @@ Route::prefix('articles')->controller(ArticleController::class)->group(function 
 Route::prefix('messages')->controller(MessageController::class)->group(function () {
     Route::get('ag', 'getCurrentAGMessage');
 });
+Route::prefix('membres')->controller(MembreController::class)->group(function () {
+    Route::get('actif', 'getActiveMember');
+});
 Route::apiResources([
     "articles"=>ArticleController::class,
     "typearticles"=>TypeArticleController::class,
     "typemessages"=>TypeMessageController::class,
     "messages"=>MessageController::class,
     "roles"=>RoleController::class,
-    /*"rubriques"=>RubriqueController::class,
-    "sousrubriques"=>SousRubriqueController::class,
+    "membres"=>MembreController::class,
+    /*"sousrubriques"=>SousRubriqueController::class,
     "stats"=>StatsController::class,
     "typepubs"=>TypePubController::class,
     "users"=>UserController::class,

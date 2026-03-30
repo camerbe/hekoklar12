@@ -19,21 +19,16 @@ class Membre extends Model
         'dateinscription',
         'email',
         'tel',
-        'actif',
-        'datefinstage',
         'fkrole',
-        'haslogged',
-        'iseligibleforfond',
-        'mdp',
-        'recovmdp',
+
         'civilite',
 
 
     ];
-    public function privilege():BelongsTo{
+
+    public function acces():BelongsTo{
         return $this->belongsTo(Role::class,'fkrole');
     }
-
     public function scopeActiveMember(Builder $query):Builder
     {
         return $query->where('actif',1);

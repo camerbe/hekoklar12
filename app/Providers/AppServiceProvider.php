@@ -3,14 +3,17 @@
 namespace App\Providers;
 
 use App\IRepositories\IArticleRepository;
+use App\IRepositories\IMembreRepository;
 use App\IRepositories\IMessageRepository;
 use App\Repositories\ArticleRepository;
+use App\Repositories\MembreRepository;
 use App\Repositories\MessageRepository;
 use App\Repositories\Repository;
 use App\Repositories\RoleRepository;
 use App\Repositories\TypeArticleRepository;
 use App\Repositories\TypeMessageRepository;
 use App\Services\ArticleService;
+use App\Services\MembreService;
 use App\Services\MessageService;
 use Illuminate\Support\ServiceProvider;
 
@@ -33,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(MessageService::class)
             ->needs(IMessageRepository::class)
             ->give(MessageRepository::class);
+
+        $this->app->when(MembreService::class)
+            ->needs(IMembreRepository::class)
+            ->give(MembreRepository::class);
 
 
 

@@ -12,7 +12,7 @@ class MembreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,13 @@ class MembreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "nom"=>"required",
+            "prenom"=>"required",
+            "dateinscription"=>"required",
+            "email"=>"required",
+            "fkrole"=>"required",
+            "civilite"=>"required",
+
         ];
     }
 }
