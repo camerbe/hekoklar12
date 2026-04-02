@@ -26,6 +26,7 @@ class TypeMessageService
          return $this->typeMessageRepository->findById($id);
     }
     function index(){
+        //dd($this->typeMessageRepository->index());
         return $this->typeMessageRepository->index();
     }
 

@@ -28,21 +28,22 @@ class MessageRepository extends Repository implements IMessageRepository
 
     function findById($id)
     {
-        return parent::findById($id);
+        return new MessageResource(parent::findById($id)) ;
     }
 
     function update(array $input, $id)
     {
         $current=$this->findById($id);
-        $input['fktypemessage']= $input['fktypemessage'] ?? $current->fktypemessage;
+        $input['typemessage_id']= $input['typemessage_id'] ?? $current->typemessage_id;
         $input['message']= $input['message'] ?? $current->message;
-        $input['datefin']=Carbon::parse($input['datefin'])->format('Y-m-d');
+        $input['datefin']= isset($input['datefin'])? Carbon::parse($input['datefin'])->format('Y-m-d')
+            : $current->datefin;
         return parent::update($input, $id);
     }
 
     function index()
     {
-        return parent::index();
+        return  MessageResource::collection(parent::index()) ;
     }
 
     function getCurrentAGMessage()

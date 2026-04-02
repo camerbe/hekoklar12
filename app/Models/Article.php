@@ -3,25 +3,29 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 
 class Article extends Model
 {
+    use HasUuids;
     //
-    protected $primaryKey  = 'idarticle';
-
+    protected $primaryKey  = 'id';
+    public $incrementing = false;
     protected $table='articles';
-    public $timestamps = false;
+    //public $timestamps = false;
     protected $fillable = [
-        'idarticle',
+        'id',
         'article',
         'chapeau',
         'slug',
-        'fktypearticle',
-        'fkpays',
+        'typearticle_id',
+        'pays_id',
         'titre' ,
         'datearticle' ,
         'auteur' ,
@@ -30,6 +34,27 @@ class Article extends Model
         'keyword' ,
         'hit' ,
     ];
+
+    protected static function boot()
+    {
+        parent::boot(); //
+        Article::creating(function ($model){
+            if (!$model->id) {
+                $model->id = Str::uuid();
+            }
+
+        });
+        Article::created(function ($model){
+
+            static::clearArticleCache($model);
+        });
+        Article::deleted(function ($model){
+            static::clearArticleCache($model);
+        });
+        Article::updated(function ($model){
+            static::clearArticleCache($model);
+        });
+    }
 
     // --- Helpers ---
     public function incrementHits(): void
@@ -42,17 +67,22 @@ class Article extends Model
     }
     public function scopeNews(Builder $query):Builder
     {
-        return $query->where('fktypearticle',2)
+        return $query->where('typearticle_id','019d494d-5210-7317-b25b-df9a383613cd')
                     ->where('datearticle','<=',now());
     }
     public function countries():BelongsTo{
-        return $this->belongsTo(Pays::class,'fkpays');
+        return $this->belongsTo(Pays::class,'pays_id');
     }
     public function typenews():BelongsTo{
-        return $this->belongsTo(Typearticle::class,'fktypearticle');
+        return $this->belongsTo(Typearticle::class,'typearticle_id');
     }
 
-    protected $with = ['media'];
+    protected static function clearArticleCache(self $model): void{
+
+        Cache::forget('news_articles');
+
+    }
+    //protected $with = ['media'];
     public function registerMediaCollections():void{
         $this->addMediaCollection('article')
             ->registerMediaConversions(function(Media $media){

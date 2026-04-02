@@ -15,16 +15,13 @@ class MessageResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=>$this->idmessage,
+            'id'=>$this->id,
             'message'=>$this->message,
             'datefin'=>$this->datefin,
-            'fktypemessage'=>$this->fktypemessage,
-            'typemessage'=> $this->whenLoaded('typemsg', function () {
-                return [
-                    'id'  => $this->typemsg->idtypemessage,
-                    'nom' => $this->typemsg->typemessage,
-                ];
-            }),
+            'typemessage_id'=>$this->typemessage_id,
+            'typemessages'=> $this->typemsg,
+            'created_at'=> $this->created_at,
+            'updated_at'=> $this->updated_at,
 
 
         ];

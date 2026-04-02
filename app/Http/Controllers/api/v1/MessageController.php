@@ -121,7 +121,7 @@ class MessageController extends Controller
             return response()->json([
                 'success'=>true,
                 'data'=>$message ,
-                'message'=>"Message supprimé"
+                'message'=>"Message trouvé"
             ],Response::HTTP_OK);
         }
         return response()->json([

@@ -15,7 +15,7 @@ class TypeMessageResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=>$this->idtypemessage,
+            'id'=>$this->id,
             'typemessage'=>$this->typemessage,
         ];
     }

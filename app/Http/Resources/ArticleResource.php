@@ -17,12 +17,12 @@ class ArticleResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=>$this->idarticle,
+            'id'=>$this->id,
             'info'=>$this->article,
             'chapeau'=>$this->chapeau,
             'slug'=>$this->slug,
-            'fktypearticle'=>$this->fktypearticle,
-            'fkpays'=>$this->fkpays,
+            'typearticle_id'=>$this->typearticle_id,
+            'pays_id'=>$this->pays_id,
             'titre'=>$this->titre,
             'datearticle'=>$this->datearticle,
             'auteur'=>$this->auteur,

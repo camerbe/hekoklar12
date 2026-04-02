@@ -25,7 +25,7 @@ class MessageRequest extends FormRequest
         return [
             'message'=>'required',
             'datefin'=>'required',
-            'fktypemessage'=>'required',
+            'typemessage_id'=>'required',
         ];
     }
 }

@@ -2,25 +2,36 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class Typemessage extends Model
 {
+    use HasUuids;
     //
-    protected $primaryKey  = 'idtypemessage';
+    protected $primaryKey  = 'id';
 
     protected $table='typemessages';
-    public $timestamps = false;
+    //public $timestamps = false;
+    public $incrementing = false;
     protected $fillable = [
-        'idtypemessage',
+        'id',
         'typemessage',
+        'slug',
 
     ];
     protected static function boot()
     {
         parent::boot(); //
+        Typemessage::creating(function ($model){
+            if (!$model->id) {
+                $model->id = Str::uuid();
+            }
+
+        });
         Typemessage::created(function ($model){
             static::clearArticleCache($model);
         });
@@ -39,6 +50,6 @@ class Typemessage extends Model
     }
     public function messages():HasMany
     {
-        return $this->hasMany(Message::class,'fktypemessage');
+        return $this->hasMany(Message::class,'typemessage_id');
     }
 }

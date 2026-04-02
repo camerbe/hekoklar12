@@ -3,34 +3,51 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class Membre extends Model
 {
-    protected $primaryKey  = 'idmembre';
+    use HasUuids;
+    protected $primaryKey  = 'id';
 
     protected $table='membres';
-    public $timestamps = false;
+    //public $timestamps = false;
+    public $incrementing = false;
     protected $fillable = [
-        'idmembre',
+        'id',
         'nom',
         'prenom',
         'dateinscription',
+        'datefinstage',
         'email',
         'tel',
-        'fkrole',
-
+        'statut',
         'civilite',
 
 
     ];
+    protected $casts = [
+        'dateinscription' => 'date',
+        'datefinstage' => 'date',
+    ];
+    protected static function boot()
+    {
+        parent::boot(); //
+        Membre::creating(function ($model){
+            if (!$model->id) {
+                $model->id = Str::uuid();
+            }
 
-    public function acces():BelongsTo{
-        return $this->belongsTo(Role::class,'fkrole');
+        });
+
     }
+    /*public function acces():BelongsTo{
+        return $this->belongsTo(Role::class,'fkrole');
+    }*/
     public function scopeActiveMember(Builder $query):Builder
     {
-        return $query->where('actif',1);
+        return $query->where('statut','Actif');
     }
 }

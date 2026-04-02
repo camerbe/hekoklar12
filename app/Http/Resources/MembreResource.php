@@ -15,18 +15,16 @@ class MembreResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=>$this->idmembre,
+            'id'=>$this->id,
             'nom'=>$this->nom,
             'prenom'=>$this->prenom,
             'email'=>$this->email,
             'tel'=>$this->tel,
-            'actif'=>$this->actif,
+            'statut'=>$this->statut,
             'datefinstage'=>$this->datefinstage,
-            'fkrole'=>$this->fkrole ,
-            'haslogged'=>$this->haslogged,
-            'iseligibleforfond'=>$this->iseligibleforfond,
+            'dateinscription'=>$this->dateinscription ,
             'civilite'=>$this->civilite,
-            'roles'=>$this->acces,
+
         ];
     }
 }

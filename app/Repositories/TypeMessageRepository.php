@@ -42,6 +42,8 @@ class TypeMessageRepository extends Repository
     function index()
     {
         $cacheKey = 'typemessages';
+        Cache::forget($cacheKey);
+        dd(parent::index());
         $typemessages=Cache::remember($cacheKey,now()->addDay(),function(){
             return TypeMessageResource::collection(parent::index()->sortBy('typemessage')->values())->resolve() ;
         });
