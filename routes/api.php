@@ -7,6 +7,8 @@ use App\Http\Controllers\api\v1\MessageController;
 use App\Http\Controllers\api\v1\RoleController;
 use App\Http\Controllers\api\v1\TypeArticleController;
 use App\Http\Controllers\api\v1\TypeMessageController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
@@ -25,17 +27,39 @@ Route::prefix('messages')->controller(MessageController::class)->group(function 
 Route::prefix('membres')->controller(MembreController::class)->group(function () {
     Route::get('actif', 'getActiveMember');
 });
+Route::prefix('binomes')->controller(BinomeController::class)->group(function () {
+    Route::get('mois', 'getMonthBinome');
+});
+Route::group(['middleware' => 'auth:sanctum'], function (){
+    Route::apiResources([
+        "articles"=>ArticleController::class,
+        "typearticles"=>TypeArticleController::class,
+        "typemessages"=>TypeMessageController::class,
+        "messages"=>MessageController::class,
+        "roles"=>RoleController::class,
+        "membres"=>MembreController::class,
+        "binomes"=>BinomeController::class,
+        /*"stats"=>StatsController::class,
+         "typepubs"=>TypePubController::class,
+         "users"=>UserController::class,
+         "videos"=>VideoController::class,*/
+    ]);
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
 
-Route::apiResources([
-    "articles"=>ArticleController::class,
-    "typearticles"=>TypeArticleController::class,
-    "typemessages"=>TypeMessageController::class,
-    "messages"=>MessageController::class,
-    "roles"=>RoleController::class,
-    "membres"=>MembreController::class,
-    "binomes"=>BinomeController::class,
-    /*"stats"=>StatsController::class,
-     "typepubs"=>TypePubController::class,
-     "users"=>UserController::class,
-     "videos"=>VideoController::class,*/
-]);
+        return response()->json([
+            'message' => 'Email vérifié avec succès'
+        ]);
+    })->middleware(['signed'])->name('verification.verify');
+
+
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+
+        return response()->json([
+            'message' => 'Lien renvoyé'
+        ]);
+    })->middleware(['throttle:6,1']);
+});
+
+

@@ -3,10 +3,11 @@
 namespace App\Repositories;
 
 use App\Http\Resources\BinomeResource;
+use App\IRepositories\IBinomeRepository;
 use App\Models\Binome;
 use Carbon\Carbon;
 
-class BinomeRepository extends Repository
+class BinomeRepository extends Repository implements IBinomeRepository
 {
 
     public function __construct(Binome $binome)
@@ -45,4 +46,12 @@ class BinomeRepository extends Repository
         return BinomeResource::collection(parent::index()) ;
     }
 
+    function getMonthBinome()
+    {
+        $binome=Binome::with(['membre1','membre2'])
+            ->where('datereception','>=',now())
+            ->orderBy('datereception','asc')
+            ->first();
+        return new BinomeResource($binome);
+    }
 }

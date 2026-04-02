@@ -113,4 +113,20 @@ class BinomeController extends Controller
             "message"=>"Erreur lors de la suppression du binôme"
         ],Response::HTTP_NO_CONTENT);
     }
+
+    public function getMonthBinome()
+    {
+        $binome=$this->binomeService->getMonthBinome();
+        if ($binome){
+            return response()->json([
+                'success'=>true,
+                'data'=>$binome ,
+                'message'=>"Binôme trouvé"
+            ],Response::HTTP_OK);
+        }
+        return response()->json([
+            "success"=>false,
+            "message"=>"Pas de binôme trouvé"
+        ],Response::HTTP_NOT_FOUND);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\IRepositories\IArticleRepository;
+use App\IRepositories\IBinomeRepository;
 use App\IRepositories\IMembreRepository;
 use App\IRepositories\IMessageRepository;
 use App\Repositories\ArticleRepository;
@@ -14,6 +15,7 @@ use App\Repositories\RoleRepository;
 use App\Repositories\TypeArticleRepository;
 use App\Repositories\TypeMessageRepository;
 use App\Services\ArticleService;
+use App\Services\BinomeService;
 use App\Services\MembreService;
 use App\Services\MessageService;
 use Illuminate\Support\ServiceProvider;
@@ -30,7 +32,11 @@ class AppServiceProvider extends ServiceProvider
              ->needs(IArticleRepository::class)
              ->give(ArticleRepository::class);
 
-        $this->app->bind(Repository::class,BinomeRepository::class);
+        $this->app->when(BinomeService::class)
+             ->needs(IBinomeRepository::class)
+             ->give(BinomeRepository::class);
+
+        //$this->app->bind(Repository::class,BinomeRepository::class);
         $this->app->bind(Repository::class,RoleRepository::class);
         $this->app->bind(Repository::class,TypeArticleRepository::class);
         $this->app->bind(Repository::class,TypeMessageRepository::class);

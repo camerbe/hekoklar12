@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Repositories\BinomeRepository;
+use App\IRepositories\IBinomeRepository;
 
 class BinomeService
 {
 
-    public function __construct(protected BinomeRepository $binomeRepository)
+    public function __construct(protected IBinomeRepository $binomeRepository)
     {
     }
 
@@ -26,5 +26,8 @@ class BinomeService
     }
     function index(){
         return $this->binomeRepository->index();
+    }
+    function getMonthBinome(){
+        return $this->binomeRepository->getMonthBinome();
     }
 }
