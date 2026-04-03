@@ -14,6 +14,7 @@ use App\Repositories\Repository;
 use App\Repositories\RoleRepository;
 use App\Repositories\TypeArticleRepository;
 use App\Repositories\TypeMessageRepository;
+use App\Repositories\VideoRepository;
 use App\Services\ArticleService;
 use App\Services\BinomeService;
 use App\Services\MembreService;
@@ -40,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(Repository::class,RoleRepository::class);
         $this->app->bind(Repository::class,TypeArticleRepository::class);
         $this->app->bind(Repository::class,TypeMessageRepository::class);
+        $this->app->bind(Repository::class,VideoRepository::class);
 
 
         $this->app->when(MessageService::class)

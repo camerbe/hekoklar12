@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class Binome extends Model
 {
+    use HasUuids;
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
@@ -26,6 +29,21 @@ class Binome extends Model
         static::updating(function ($binome) {
             $binome->annee = date('Y', strtotime($binome->datereception));
         });
+        Binome::created(function ($model){
+
+            static::clearArticleCache($model);
+        });
+        Binome::deleted(function ($model){
+            static::clearArticleCache($model);
+        });
+        Binome::updated(function ($model){
+            static::clearArticleCache($model);
+        });
+    }
+    protected static function clearArticleCache(self $model): void{
+
+        Cache::forget('month_binome');
+
     }
     public function membre1()
     {

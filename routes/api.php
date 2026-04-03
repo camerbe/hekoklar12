@@ -7,6 +7,7 @@ use App\Http\Controllers\api\v1\MessageController;
 use App\Http\Controllers\api\v1\RoleController;
 use App\Http\Controllers\api\v1\TypeArticleController;
 use App\Http\Controllers\api\v1\TypeMessageController;
+use App\Http\Controllers\api\v1\VideoController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,9 @@ Route::prefix('membres')->controller(MembreController::class)->group(function ()
 Route::prefix('binomes')->controller(BinomeController::class)->group(function () {
     Route::get('mois', 'getMonthBinome');
 });
+Route::prefix('videos')->controller(VideoController::class)->group(function () {
+    Route::get('list', 'getvideoList');
+});
 Route::group(['middleware' => 'auth:sanctum'], function (){
     Route::apiResources([
         "articles"=>ArticleController::class,
@@ -39,10 +43,11 @@ Route::group(['middleware' => 'auth:sanctum'], function (){
         "roles"=>RoleController::class,
         "membres"=>MembreController::class,
         "binomes"=>BinomeController::class,
+        "videos"=>VideoController::class,
         /*"stats"=>StatsController::class,
          "typepubs"=>TypePubController::class,
          "users"=>UserController::class,
-         "videos"=>VideoController::class,*/
+         */
     ]);
     Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
         $request->fulfill();
