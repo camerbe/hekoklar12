@@ -53,8 +53,11 @@ class Message extends Model
     }
     public function scopeMsgAG(Builder $query):Builder
     {
-        return $query->where('typemessage_id','019d494d-501f-70a0-989a-34ac5a129707')
-                    ->where('datefin','>=',now());
+        return $query->whereHas('typemsg', function ($q) {
+            $q->where('slug', 'assemblee-generale')
+                ->where('datefin','>=',now());
+        });
+
     }
 
     public function typemsg():BelongsTo{

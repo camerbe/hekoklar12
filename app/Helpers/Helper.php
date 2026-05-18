@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Carbon\Carbon;
+
 class Helper
 {
     public static function extractImgSrc(string $html): ?string
@@ -42,5 +44,21 @@ class Helper
 
     public static function guillemets(string $text):string {
         return preg_replace('/"([^"]+)"/u', "«\u{202F}$1\u{202F}»", $text);
+    }
+    public static function lastSaturday(){
+        $today = Carbon::today();
+        $dernierSamedi = $today->copy()
+            ->endOfMonth()
+            ->previous(Carbon::SATURDAY);
+
+        if ($dernierSamedi->lt($today)) {
+            $dernierSamedi = $today->copy()
+                ->addMonth()
+                ->endOfMonth()
+                ->previous(Carbon::SATURDAY);
+        }
+        return $dernierSamedi
+            ->locale('fr')
+            ->translatedFormat('l d F Y');
     }
 }

@@ -44,6 +44,7 @@ class MembreController extends Controller
      */
     public function store(MembreRequest $request)
     {
+        //dd($request->all());
         $membre=$this->membreService->create($request->all());
         if ($membre){
             return response()->json([
@@ -129,4 +130,19 @@ class MembreController extends Controller
             "message"=>"Pas de membre actif trouvé"
         ],Response::HTTP_NOT_FOUND);
     }
+    public function getStat(){
+        $membres=$this->membreService->getStat();
+        if ($membres){
+            return response()->json([
+                'success'=>true,
+                'data'=>$membres,
+                'message'=>"Liste des stats"
+            ],Response::HTTP_OK);
+        }
+        return response()->json([
+            "success"=>false,
+            "message"=>"Pas de stats trouvé"
+        ],Response::HTTP_NOT_FOUND);
+    }
+
 }

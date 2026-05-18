@@ -31,4 +31,9 @@ class MessageService
     function getCurrentAGMessage(){
         return $this->messageRepository->getCurrentAGMessage();
     }
+
+    function getTypeMessages()
+    {
+        return $this->messageRepository->getTypeMessage();
+    }
 }

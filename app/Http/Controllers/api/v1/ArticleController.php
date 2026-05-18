@@ -45,6 +45,7 @@ class ArticleController extends Controller
      */
     public function store(ArticleRequest $request)
     {
+        //dd($request->all());
         $article=$this->articleService->create($request->all());
         if ($article){
             return response()->json([
@@ -118,6 +119,84 @@ class ArticleController extends Controller
 
     public function getNews(){
         $articles=$this->articleService->getNews();
+        if ($articles){
+            return response()->json([
+                'success'=>true,
+                'data'=>$articles,
+                'message'=>"Liste des articles"
+            ],Response::HTTP_OK);
+        }
+        return response()->json([
+            "success"=>false,
+            "message"=>"Pas d'article trouvé"
+        ],Response::HTTP_NOT_FOUND);
+    }
+
+    public function getBySlug(string $slug)
+    {
+        $article=$this->articleService->getBySlug($slug);
+        if ($article){
+            return response()->json([
+                'success'=>true,
+                'data'=>$article ,
+                'message'=>"Article trouvé"
+            ],Response::HTTP_OK);
+        }
+        return response()->json([
+            "success"=>false,
+            "message"=>"Pas d'article trouvé"
+        ],Response::HTTP_NOT_FOUND);
+    }
+    public function getCountries()
+    {
+        $countries=$this->articleService->getCountries();
+        if ($countries){
+            return response()->json([
+                'success'=>true,
+                'data'=>$countries,
+                'message'=>"Liste des pays"
+            ],Response::HTTP_OK);
+        }
+        return response()->json([
+            "success"=>false,
+            "message"=>"Pas de pays trouvé"
+        ],Response::HTTP_NOT_FOUND);
+    }
+    public function getTypeArticle()
+    {
+        $typearticles=$this->articleService->getTypeArticle();
+        if ($typearticles){
+            return response()->json([
+                'success'=>true,
+                'data'=>$typearticles,
+                'message'=>"Liste des types d'article"
+            ],Response::HTTP_OK);
+        }
+        return response()->json([
+            "success"=>false,
+            "message"=>"Pas de type d'article trouvé"
+        ],Response::HTTP_NOT_FOUND);
+    }
+
+    public function search($search)
+    {
+        $articles=$this->articleService->search($search);
+        if ($articles){
+            return response()->json([
+                'success'=>true,
+                'data'=>$articles,
+                'message'=>"Liste des articles"
+            ],Response::HTTP_OK);
+        }
+        return response()->json([
+            "success"=>false,
+            "message"=>"Pas d'article trouvé"
+        ],Response::HTTP_NOT_FOUND);
+    }
+
+    public function getCommunaute()
+    {
+        $articles=$this->articleService->getCommunaute();
         if ($articles){
             return response()->json([
                 'success'=>true,

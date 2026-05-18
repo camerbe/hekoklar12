@@ -33,5 +33,20 @@ class ArticleService
     {
         return $this->articleRepository->getNews();
 
-     }
+    }
+    function getBySlug($slug){
+        return $this->articleRepository->getBySlug($slug);
+    }
+    function getTypeArticle(){
+        return $this->articleRepository->getTypeArticle();
+    }
+    function getCountries(){
+        return $this->articleRepository->getCountries();
+    }
+    function search($search){
+        return $this->articleRepository->search($search);
+    }
+    function getCommunaute(){
+        return $this->articleRepository->getCommunaute();
+    }
 }

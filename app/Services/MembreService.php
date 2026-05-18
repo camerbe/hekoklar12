@@ -30,4 +30,7 @@ class MembreService
     function getActiveMember(){
         return $this->membreRepository->getActiveMember();
     }
+    function getStat(){
+        return $this->membreRepository->stat();
+    }
 }

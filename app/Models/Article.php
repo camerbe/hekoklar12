@@ -61,15 +61,7 @@ class Article extends Model
     {
         $this->increment('hit');
     }
-    public function scopePublished(Builder $query):Builder
-    {
-        return $query->where('datearticle','<=',now());
-    }
-    public function scopeNews(Builder $query):Builder
-    {
-        return $query->where('typearticle_id','019d494d-5210-7317-b25b-df9a383613cd')
-                    ->where('datearticle','<=',now());
-    }
+
     public function countries():BelongsTo{
         return $this->belongsTo(Pays::class,'pays_id');
     }
@@ -80,6 +72,7 @@ class Article extends Model
     protected static function clearArticleCache(self $model): void{
 
         Cache::forget('news_articles');
+        Cache::forget('news_communautes');
 
     }
     //protected $with = ['media'];
@@ -105,6 +98,45 @@ class Article extends Model
                 'width' => $media->getCustomProperty('width'),
                 'height'=> $media->getCustomProperty('height'),
             ];
+        });
+    }
+    public function scopeSearch(Builder $query,string $search)
+    {
+        $search = trim($search);
+        if (empty($search)) {
+            return $query;
+        }
+        return $query
+            ->whereFullText(
+                ['titre'],   // chercher dans plusieurs colonnes
+                $search,
+                ['mode' => 'boolean']   // mode boolean pour + de contrôle
+            )
+            ->orderByRaw(
+                'MATCH(titre) AGAINST(? IN BOOLEAN MODE) DESC',
+                [$search]              // trier par pertinence
+            );
+    }
+    public function scopeBanen(Builder $query):Builder
+    {
+        return $query->whereHas('typenews', function ($q) {
+            $q->where('slug', 'ndikinimeki')
+                ->orWhere('slug', 'nitoukou')
+                ->orWhere('slug', 'yingui');
+        });
+    }
+    public function scopePublished(Builder $query):Builder
+    {
+        return $query->where('datearticle','<=',now());
+    }
+    public function scopeNews(Builder $query):Builder
+    {
+        /*return $query->where('typearticle_id','019d494d-5210-7317-b25b-df9a383613cd')
+            ->where('datearticle','<=',now());*/
+
+        return $query->whereHas('typenews', function ($q) {
+            $q->where('datearticle', '<=',now())
+                ->Where('slug', 'article');
         });
     }
 }

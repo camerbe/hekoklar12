@@ -19,9 +19,10 @@ class MessageResource extends JsonResource
             'message'=>$this->message,
             'datefin'=>$this->datefin,
             'typemessage_id'=>$this->typemessage_id,
-            'typemessages'=> $this->typemsg,
-            'created_at'=> $this->created_at,
-            'updated_at'=> $this->updated_at,
+            'typemessages' => $this->typemsg
+                ? (new TypeMessageResource($this->typemsg))->toArray($request)
+                : null,
+            
 
 
         ];

@@ -18,7 +18,7 @@ class ArticleResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'info'=>$this->article,
+            'article'=>$this->article,
             'chapeau'=>$this->chapeau,
             'slug'=>$this->slug,
             'typearticle_id'=>$this->typearticle_id,
@@ -31,8 +31,13 @@ class ArticleResource extends JsonResource
             'photo'=>$this->image,
             'keyword'=>$this->keyword,
             'hit'=>$this->hit,
-            'countries'=>$this->countries,
-            'typearticles'=>$this->typenews,
+            'countries' => $this->countries
+                ? (new PaysResource($this->countries))->toArray($request)
+                : null,
+
+            'typearticles' => $this->typenews
+                ? (new TypeArticleResource($this->typenews))->toArray($request)
+                : null,
 
         ];
     }

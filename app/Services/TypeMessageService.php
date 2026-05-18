@@ -3,11 +3,12 @@
 namespace App\Services;
 
 use App\Repositories\Repository;
+use App\Repositories\TypeMessageRepository;
 
 class TypeMessageService
 {
 
-    public function __construct(protected Repository $typeMessageRepository)
+    public function __construct(protected TypeMessageRepository $typeMessageRepository)
     {
     }
 

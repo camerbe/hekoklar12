@@ -27,7 +27,6 @@ class MembreRequest extends FormRequest
             "prenom"=>"required",
             "dateinscription"=>"required",
             "email"=>"required",
-            "fkrole"=>"required",
             "civilite"=>"required",
 
         ];

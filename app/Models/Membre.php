@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class Membre extends Model
@@ -42,6 +43,25 @@ class Membre extends Model
 
         });
 
+
+    }
+    protected static function booted()
+    {
+        static::creating(function ($membre) {
+            $membre->id = (string) Str::uuid();
+            //$binome->annee = date('Y', strtotime($binome->datereception));
+        });
+
+        Membre::created(function ($model){
+
+            static::clearMembreCache($model);
+        });
+        Membre::deleted(function ($model){
+            static::clearMembreCache($model);
+        });
+        Membre::updated(function ($model){
+            static::clearMembreCache($model);
+        });
     }
     /*public function acces():BelongsTo{
         return $this->belongsTo(Role::class,'fkrole');
@@ -49,5 +69,10 @@ class Membre extends Model
     public function scopeActiveMember(Builder $query):Builder
     {
         return $query->where('statut','Actif');
+    }
+    protected static function clearMembreCache(self $model): void{
+
+        Cache::forget('stats');
+
     }
 }

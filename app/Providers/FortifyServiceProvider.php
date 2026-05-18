@@ -38,7 +38,7 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         VerifyEmail::createUrlUsing(function ($notifiable) {
-            return config('app.frontend_url') . '/verify-email?' . http_build_query([
+            return config('app.frontend_url') . '/api/email/verify?' . http_build_query([
                     'id' => $notifiable->getKey(),
                     'hash' => sha1($notifiable->getEmailForVerification()),
                 ]);

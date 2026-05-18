@@ -14,6 +14,7 @@ use App\Repositories\Repository;
 use App\Repositories\RoleRepository;
 use App\Repositories\TypeArticleRepository;
 use App\Repositories\TypeMessageRepository;
+use App\Repositories\UserRepository;
 use App\Repositories\VideoRepository;
 use App\Services\ArticleService;
 use App\Services\BinomeService;
@@ -38,9 +39,11 @@ class AppServiceProvider extends ServiceProvider
              ->give(BinomeRepository::class);
 
         //$this->app->bind(Repository::class,BinomeRepository::class);
+
         $this->app->bind(Repository::class,RoleRepository::class);
         $this->app->bind(Repository::class,TypeArticleRepository::class);
         $this->app->bind(Repository::class,TypeMessageRepository::class);
+        $this->app->bind(Repository::class,UserRepository::class);
         $this->app->bind(Repository::class,VideoRepository::class);
 
 

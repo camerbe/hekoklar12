@@ -12,12 +12,18 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+
     ->withCommands([
         SlugUpdCommand::class,
     ])
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->preventRequestForgery(except: [
+            'laravel-filemanager/*',
+            'filemanager/*',
+        ]);
+
     })
+
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();

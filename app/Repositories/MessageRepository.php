@@ -2,9 +2,12 @@
 
 namespace App\Repositories;
 
+use App\Helpers\Helper;
 use App\Http\Resources\MessageResource;
+use App\Http\Resources\TypeMessageResource;
 use App\IRepositories\IMessageRepository;
 use App\Models\Message;
+use App\Models\Typemessage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
@@ -18,6 +21,7 @@ class MessageRepository extends Repository implements IMessageRepository
     function create(array $input)
     {
         $input['datefin']=Carbon::parse($input['datefin'])->format('Y-m-d');
+
         return parent::create($input);
     }
 
@@ -38,6 +42,7 @@ class MessageRepository extends Repository implements IMessageRepository
         $input['message']= $input['message'] ?? $current->message;
         $input['datefin']= isset($input['datefin'])? Carbon::parse($input['datefin'])->format('Y-m-d')
             : $current->datefin;
+
         return parent::update($input, $id);
     }
 
@@ -50,17 +55,26 @@ class MessageRepository extends Repository implements IMessageRepository
     {
         $cacheKey = 'current-ag';
         //Cache::forget($cacheKey);
-        //$cacheExpiry = now()->addDay();
-        $messageData= Cache::remember($cacheKey , now()->addDay() , function () {
+        $cacheExpiry = now()->addDay();
+        return Cache::remember($cacheKey , $cacheExpiry , function () {
             $message= Message::MsgAG()
                 ->with(['typemsg'])
                 ->orderBy('datefin','asc')
                 ->first();
             //dd($message);
-            if(!$message) return null;
+           // if(!$message) return null;
             return (new MessageResource($message))->toArray(request());
         });
-        //dd($articles);
-        return $messageData;
+
+
+
+
     }
+
+    function getTypeMessage()
+    {
+       return   TypeMessageResource::collection(Typemessage::all()->sortBy('typemessage')) ;
+    }
+
+
 }

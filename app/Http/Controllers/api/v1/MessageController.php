@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MessageRequest;
 use App\Services\MessageService;
@@ -118,6 +119,12 @@ class MessageController extends Controller
     public function getCurrentAGMessage(){
         $message=$this->messageService->getCurrentAGMessage();
         if ($message){
+
+            $message["message"] = str_replace(
+                '{{date_reunion}}',
+                Helper::lastSaturday(),
+                $message["message"]
+            );
             return response()->json([
                 'success'=>true,
                 'data'=>$message ,
@@ -127,6 +134,20 @@ class MessageController extends Controller
         return response()->json([
             "success"=>false,
             "message"=>"Pas de message trouvé"
+        ],Response::HTTP_NOT_FOUND);
+    }
+    public function getTypeMessages(){
+        $typemessages=$this->messageService->getTypeMessages();
+        if ($typemessages){
+            return response()->json([
+                'success'=>true,
+                'data'=>$typemessages ,
+                'message'=>"Type de message trouvé"
+            ],Response::HTTP_OK);
+        }
+        return response()->json([
+            "success"=>false,
+            "message"=>"Pas de type de message trouvé"
         ],Response::HTTP_NOT_FOUND);
     }
 }
