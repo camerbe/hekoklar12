@@ -209,4 +209,50 @@ class ArticleController extends Controller
             "message"=>"Pas d'article trouvé"
         ],Response::HTTP_NOT_FOUND);
     }
+    public function getMostReaded()
+    {
+        $articles=$this->articleService->getMostReaded();
+        if ($articles){
+            return response()->json([
+                'success'=>true,
+                'data'=>$articles,
+                'message'=>"Liste des articles les plus lus"
+            ],Response::HTTP_OK);
+        }
+        return response()->json([
+            "success"=>false,
+            "message"=>"Pas d'article trouvé"
+        ],Response::HTTP_NOT_FOUND);
+    }
+    public function getCultureBanen()
+    {
+        $articles=$this->articleService->getCultureBanen();
+        if ($articles){
+            return response()->json([
+                'success'=>true,
+                'data'=>$articles,
+                'message'=>"Liste des articles"
+            ],Response::HTTP_OK);
+        }
+        return response()->json([
+            "success"=>false,
+            "message"=>"Pas d'article trouvé"
+        ],Response::HTTP_NOT_FOUND);
+    }
+    public function getAllBanen()
+    {
+        $articles=$this->articleService->getAllBanen();
+        if ($articles){
+            return response()->json([
+                'success'=>true,
+                'data'=>$articles,
+                'message'=>"Liste des articles"
+            ],Response::HTTP_OK);
+        }
+        return response()->json([
+            "success"=>false,
+            "message"=>"Pas d'article trouvé"
+        ],Response::HTTP_NOT_FOUND);
+    }
+
 }

@@ -29,7 +29,10 @@ Route::post('/reset-password',[NewPasswordController::class,'store'])->name('for
 Route::prefix('articles')->controller(ArticleController::class)->group(function () {
     Route::get('news', 'getNews');
     route::get('slug/{slug}','getBySlug');
-    route::get('banen','getCommunaute');
+    //route::get('banen','getCommunaute');
+    route::get('mostreaded','getMostReaded');
+    //route::get('culture/banen','getCultureBanen');
+    route::get('banen','getAllBanen');
 
 });
 Route::prefix('messages')->controller(MessageController::class)->group(function () {
@@ -43,7 +46,12 @@ Route::prefix('binomes')->controller(BinomeController::class)->group(function ()
     Route::get('mois', 'getMonthBinome');
 });
 Route::prefix('videos')->controller(VideoController::class)->group(function () {
-    Route::get('list', 'getvideoList');
+    Route::get('one', 'getRandomVideo');
+    Route::get('list', 'getVideoList');
+
+});
+Route::prefix('users')->controller(UserController::class)->group(function () {
+    Route::get('team', 'getTeam');
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function (){

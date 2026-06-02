@@ -117,10 +117,27 @@ class VideoController extends Controller
     public function getVideoList()
     {
         $videos=$this->videoService->getVideoList();
+
         if ($videos){
             return response()->json([
                 'success'=>true,
                 'data'=>$videos,
+                'message'=>"Liste des vidéos"
+            ],Response::HTTP_OK);
+        }
+        return response()->json([
+            "success"=>false,
+            "message"=>"Pas de vidéo trouvé"
+        ],Response::HTTP_NOT_FOUND);
+    }
+
+    public function getRandomVideo()
+    {
+        $video=$this->videoService->getRandomVideo();
+        if ($video){
+            return response()->json([
+                'success'=>true,
+                'data'=>$video,
                 'message'=>"Liste des vidéos"
             ],Response::HTTP_OK);
         }

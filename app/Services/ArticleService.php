@@ -49,4 +49,15 @@ class ArticleService
     function getCommunaute(){
         return $this->articleRepository->getCommunaute();
     }
+
+    function getCultureBanen(){
+        return $this->articleRepository->getCultureBanen();
+    }
+    function getMostReaded(){
+        return $this->articleRepository->getMostReaded();
+    }
+
+    function getAllBanen(){
+        return $this->articleRepository->getAllBanen();
+    }
 }

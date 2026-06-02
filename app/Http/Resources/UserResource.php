@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,6 +15,7 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $image=Helper::extractImgSrc($this->photo);
         return [
             'id'=>$this->id,
             'nom'=>$this->nom,
@@ -21,6 +23,8 @@ class UserResource extends JsonResource
             'fullName'=>$this->nom.' '.$this->prenom,
             'email'=>$this->email,
             'role'=>$this->role,
+            'photo'=>$this->photo,
+            'image'=>$image,
             'created_at'=>$this->created_at,
             'updated_at'=>$this->updated_at,
             'email_verified_at'=>$this->email_verified_at,

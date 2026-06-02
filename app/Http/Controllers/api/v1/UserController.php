@@ -30,12 +30,12 @@ class UserController extends Controller
             return response()->json([
                 'success'=>true,
                 'data'=>$users ,
-                'message'=>"Utilisateur ajouté"
+                'message'=>"Liste des utilisateurs"
             ],Response::HTTP_OK);
         }
         return response()->json([
             "success"=>false,
-            "message"=>"Problème survenu lors de l'insertion  de l'utilisateur"
+            "message"=>"Pas d'utilisateur"
         ],Response::HTTP_NOT_FOUND);
     }
 
@@ -114,5 +114,21 @@ class UserController extends Controller
             "success"=>false,
             "message"=>"Erreur lors de la suppression de l'utilisateur"
         ],Response::HTTP_NO_CONTENT);
+    }
+
+    public function getTeam()
+    {
+        $users=$this->userService->getTeam();
+        if ($users){
+            return response()->json([
+                'success'=>true,
+                'data'=>$users ,
+                'message'=>"Le bureau"
+            ],Response::HTTP_OK);
+        }
+        return response()->json([
+            "success"=>false,
+            "message"=>"Pas  de membre de bureau"
+        ],Response::HTTP_NOT_FOUND);
     }
 }

@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -36,7 +37,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'prenom',
         'email',
         'password',
-        'role'
+        'role',
+        'photo'
     ];
     protected $hidden = [
         'password',
@@ -58,5 +60,14 @@ class User extends Authenticatable implements MustVerifyEmail
                 $model->id = (string) Str::uuid();
             }
         });
+    }
+
+    public function scopeTeam(Builder $query):Builder
+    {
+        return $query->where('role','Tre')
+                    ->orWhere('role', 'Sec')
+                    ->orWhere('role', 'Pre');
+
+
     }
 }

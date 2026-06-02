@@ -42,6 +42,8 @@ class CreateNewUser implements CreatesNewUsers
             'prenom' => Str::title($input['prenom']),
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'role'=>$input['role'],
+            'photo'=>$input['photo'],
         ]);
         event(new Registered($user));
         return $user;

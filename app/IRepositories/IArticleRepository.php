@@ -9,5 +9,8 @@ interface IArticleRepository
     function getTypeArticle();
     function getCountries();
     function search($request);
+    function getMostReaded();
+    function getCultureBanen();
+    function getAllBanen();
 
 }

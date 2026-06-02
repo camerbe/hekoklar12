@@ -73,6 +73,9 @@ class Article extends Model
 
         Cache::forget('news_articles');
         Cache::forget('news_communautes');
+        Cache::forget('articles_json');
+        Cache::forget('most-readed');
+        Cache::forget('news_culture-banen');
 
     }
     //protected $with = ['media'];
@@ -125,6 +128,14 @@ class Article extends Model
                 ->orWhere('slug', 'yingui');
         });
     }
+    public function scopeCultureBanen(Builder $query):Builder
+    {
+        return $query->whereHas('typenews', function ($q) {
+            $q->where('slug', 'peuple-banen')
+                ->orWhere('slug', 'territoire')
+                ->orWhere('slug', 'langue');
+        })->orderBy('slug');;
+    }
     public function scopePublished(Builder $query):Builder
     {
         return $query->where('datearticle','<=',now());
@@ -137,6 +148,16 @@ class Article extends Model
         return $query->whereHas('typenews', function ($q) {
             $q->where('datearticle', '<=',now())
                 ->Where('slug', 'article');
-        });
+        })->orderByDesc('datearticle');;
+    }
+    public function scopeMostReaded(Builder $query):Builder
+    {
+        /*return $query->where('typearticle_id','019d494d-5210-7317-b25b-df9a383613cd')
+            ->where('datearticle','<=',now());*/
+
+        return $query->whereHas('typenews', function ($q) {
+            $q->where('datearticle', '<=', now())
+                ->where('slug', 'article');
+            })->orderByDesc('hit');
     }
 }

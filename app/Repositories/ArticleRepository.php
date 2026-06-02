@@ -91,7 +91,7 @@ class ArticleRepository extends Repository implements IArticleRepository
         return  Cache::remember($cacheKey , $cacheExpiry, function () {
             $articles= Article::News()
                 ->with(['countries','typenews'])
-                ->orderByDesc('datearticle')
+                //->orderByDesc('datearticle')
                 ->limit(60)
                 ->get();
             //return ArticleResource::collection($articles);
@@ -146,4 +146,69 @@ class ArticleRepository extends Repository implements IArticleRepository
         //dd($articles);
         return $communautes;
     }
+    function getMostReaded(){
+        $cacheKey = 'most-readed';
+        //Cache::forget($cacheKey) ;
+        $cacheExpiry = now()->addMonth();
+        $communautes= Cache::remember($cacheKey , $cacheExpiry, function () {
+            $articles= Article::MostReaded()
+                ->with(['countries','typenews'])
+                ->limit(5)
+                ->get();
+            return ArticleResource::collection($articles)->resolve();
+        });
+        //dd($articles);
+        return $communautes;
+    }
+
+    function getCultureBanen()
+    {
+        $cacheKey = 'news_culture-banen';
+        $cacheExpiry = now()->addMonth();
+        $communautes= Cache::remember($cacheKey , $cacheExpiry, function () {
+            $articles = Article::CultureBanen()
+                ->with(['countries', 'typenews'])
+                ->orderByDesc('datearticle')
+                ->limit(3)
+                ->get();
+            return ArticleResource::collection($articles)->resolve();
+        });
+        return $communautes;
+    }
+    function getAllBanen(){
+        //Cache::forget('All-banen-article');
+        $cache = 'All-banen-article';
+        $cacheExpiry = now()->addDay();
+        $articles= Cache::remember($cache, $cacheExpiry, function () {
+            $newsIds=Article::News()
+                ->latest('datearticle')
+                ->limit(60)
+                ->pluck('id');
+
+            $cultureIds=Article::CultureBanen()
+                ->latest('datearticle')
+                ->limit(3)
+                ->pluck('id');
+
+            $communauteIds=Article::Banen()
+                ->latest('datearticle')
+                ->limit(3)
+                ->pluck('id');
+
+            $ids = $newsIds
+                ->merge($cultureIds)
+                ->merge($communauteIds)
+                ->unique()
+                ->values();
+
+            $allBanen= Article::with(['countries', 'typenews'])
+                ->whereIn('id', $ids)
+                ->orderByDesc('datearticle')
+                ->get();
+            return ArticleResource::collection($allBanen)->resolve();
+        });
+
+        return $articles;
+    }
+
 }

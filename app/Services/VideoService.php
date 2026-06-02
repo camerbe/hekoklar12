@@ -30,4 +30,7 @@ class VideoService
     function getVideoList(){
         return $this->videoRepository->getVideoList();
     }
+    function getRandomVideo(){
+        return $this->videoRepository->getRandomVideo();
+    }
 }

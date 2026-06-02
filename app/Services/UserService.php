@@ -25,5 +25,8 @@ class UserService
     function find($id){
         return $this->userRepository->findById($id);
     }
+    function getTeam(){
+        return $this->userRepository->getTeam();
+    }
 }
 
