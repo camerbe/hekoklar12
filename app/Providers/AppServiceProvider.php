@@ -20,6 +20,7 @@ use App\Services\ArticleService;
 use App\Services\BinomeService;
 use App\Services\MembreService;
 use App\Services\MessageService;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -65,5 +66,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        ResetPassword::createUrlUsing(function ($notifiable,$token){
+            return env("FRONTEND_URL")."/auth/reset-password/{$token}?email={$notifiable->getEmailForPasswordReset()}";
+        });
     }
 }

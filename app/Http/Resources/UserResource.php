@@ -15,7 +15,7 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $image=Helper::extractImgSrc($this->photo);
+
         return [
             'id'=>$this->id,
             'nom'=>$this->nom,
@@ -24,7 +24,7 @@ class UserResource extends JsonResource
             'email'=>$this->email,
             'role'=>$this->role,
             'photo'=>$this->photo,
-            'image'=>$image,
+            'image'=>$this->getImage(),
             'created_at'=>$this->created_at,
             'updated_at'=>$this->updated_at,
             'email_verified_at'=>$this->email_verified_at,
@@ -32,5 +32,8 @@ class UserResource extends JsonResource
             'two_factor_recovery_codes'=>$this->two_factor_recovery_codes,
             'two_factor_confirmed_at'=>$this->two_factor_confirmed_at,
         ];
+    }
+    protected function getImage(){
+        return ($this->photo) ? Helper::extractImgSrc($this->photo): null;
     }
 }

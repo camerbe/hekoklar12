@@ -10,6 +10,7 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
@@ -38,9 +39,22 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         VerifyEmail::createUrlUsing(function ($notifiable) {
-            return config('app.frontend_url') . '/api/email/verify?' . http_build_query([
+
+            $verificationUrl = URL::temporarySignedRoute(
+                'verification.verify',
+                now()->addMinutes(60),
+                [
                     'id' => $notifiable->getKey(),
                     'hash' => sha1($notifiable->getEmailForVerification()),
+                ]
+            );
+            $parts =parse_url($verificationUrl);
+            $apiVerificationUrl=env("APP_URL")."/api".$parts["path"]."?".$parts["query"];
+
+            return env("FRONTEND_URL") . '/auth/email/verify?' . http_build_query([
+                    /*'id' => $notifiable->getKey(),
+                    'hash' => sha1($notifiable->getEmailForVerification()),*/
+                    'verify_url' => $apiVerificationUrl,
                 ]);
         });
         Fortify::createUsersUsing(CreateNewUser::class);

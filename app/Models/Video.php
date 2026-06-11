@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class Video extends Model
@@ -23,11 +24,21 @@ class Video extends Model
     protected static function booted()
     {
         parent::boot(); //
-        Typemessage::creating(function ($model){
+        Video::creating(function ($model){
             if (!$model->id) {
                 $model->id = Str::uuid();
             }
 
+        });
+        Video::created(function ($model){
+
+            static::clearArticleCache($model);
+        });
+        Video::deleted(function ($model){
+            static::clearArticleCache($model);
+        });
+        Video::updated(function ($model){
+            static::clearArticleCache($model);
         });
 
 
@@ -35,6 +46,13 @@ class Video extends Model
     public function scopeVideoList(Builder $query):Builder
     {
         return $query->orderByDesc('created_at');
+    }
+
+    protected static function clearArticleCache(self $model): void{
+
+        Cache::forget('random_videos_pool');
+
+
     }
 
 }

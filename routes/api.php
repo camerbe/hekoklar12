@@ -8,14 +8,18 @@ use App\Http\Controllers\api\v1\RoleController;
 use App\Http\Controllers\api\v1\TypeArticleController;
 use App\Http\Controllers\api\v1\TypeMessageController;
 use App\Http\Controllers\api\v1\UserController;
+use App\Http\Controllers\api\v1\VerifyEmailController;
 use App\Http\Controllers\api\v1\VideoController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
 use Laravel\Fortify\Http\Controllers\NewPasswordController;
 use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
+//use Laravel\Fortify\Http\Controllers\VerifyEmailController;
+use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 
 /*Route::get('/user', function (Request $request) {
     return $request->user();
@@ -23,7 +27,8 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 Route::post('/login',[AuthenticatedSessionController::class,'store'])->name('login');
 Route::post('/forgot-password',[PasswordResetLinkController::class,'store'])->name('forgot-password');
-Route::post('/reset-password',[NewPasswordController::class,'store'])->name('forgot-password');
+Route::post('/reset-password',[NewPasswordController::class,'store'])->name('reset-password');
+Route::get('/sanctum/csrf-cookie ',[CsrfCookieController::class,'show'])->name('sanctum.csrf-cookie');
 
 
 Route::prefix('articles')->controller(ArticleController::class)->group(function () {
@@ -53,6 +58,14 @@ Route::prefix('videos')->controller(VideoController::class)->group(function () {
 Route::prefix('users')->controller(UserController::class)->group(function () {
     Route::get('team', 'getTeam');
 });
+Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+    //->middleware(['signed', 'resolve.verifiable.user'])
+    ->name('verification.verify');
+/*Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    //return redirect('/home');
+})->middleware(['signed', 'resolve.verifiable.user'])->name('verification.verify');*/
 
 Route::group(['middleware' => 'auth:sanctum'], function (){
 
@@ -74,6 +87,7 @@ Route::group(['middleware' => 'auth:sanctum'], function (){
     Route::post('/logout',[AuthenticatedSessionController::class,'destroy'])->name('logout');
     Route::post('/register',[RegisteredUserController::class,'store'])->name('register');
     Route::get('/messagetype',[MessageController::class,'getTypeMessages'])->name('messagetype');
+    //Route::get('/email/verify/{id}/{hash}',[VerifyEmailController::class,'__invoke'])->name('verification.verify');
 
     Route::prefix('articles')->controller(ArticleController::class)->group(function () {
         route::get('/type/articles','getTypeArticle');

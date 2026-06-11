@@ -70,4 +70,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
     }
+    public function scopeList(Builder $query):Builder
+    {
+        return $query->orderBy('nom')
+                    ->orderBy('prenom');
+
+
+    }
 }

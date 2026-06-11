@@ -46,8 +46,8 @@ class VideoRepository extends Repository
     {
         return  VideoResource::collection(
             $this->videoList()
-                ->orderByDesc('created_at')
-                ->get()
+                //->orderByDesc('created_at')
+                //->get()
         ) ;
     }
     function getVideoList(){

@@ -44,7 +44,8 @@ class UserRepository extends Repository
 
     function index()
     {
-        return UserResource::collection(parent::index()->sortBy('nom')->values());
+        $users=User::List()->get();
+        return UserResource::collection( $users)->resolve();
     }
     function getTeam(){
         $cacheKey="user-team";
