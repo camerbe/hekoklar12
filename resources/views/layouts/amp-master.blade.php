@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
     <x-meta
         :title="$title ?? ''"
         :description="$description ?? ''"
@@ -20,14 +21,14 @@
     />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="robots" content="index,follow">
-
+    <link rel="icon" type="image/x-icon" href=" {{asset('assets/logo/hekok.ico')}}" />
     <!-- AMP -->
     <script async src="https://cdn.ampproject.org/v0.js"></script>
     <script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
     <script async custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"></script>
     <script async custom-element="amp-next-page" src="https://cdn.ampproject.org/v0/amp-next-page-1.0.js"></script>
-
-
+    <script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
+    <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -305,27 +306,33 @@
 
 <header>
     <button class="menu-btn" on="tap:sidebar.toggle" aria-label="Ouvrir le menu">☰</button>
-    Ubuntu Afrika
+    Banen du Benelux
+    <amp-img
+        title="{{$title}}"
+        alt="Hekok"
+        src="{{asset('assets/logo/logo-hekok-trans.png')}}"
+        width="86"
+        height="60"
+        layout="responsive">
+    </amp-img>
 </header>
 
 <amp-sidebar id="sidebar" layout="nodisplay">
-    <a href="#accueil">Accueil</a>
+    <a href="{{env('AMP_URL')}}/accueil">Accueil</a>
     <a href="#histoire">Histoire</a>
     <a href="#equipe">Équipe</a>
     <a href="#contact">Contact</a>
 </amp-sidebar>
 
 <section id="accueil" class="hero">
-    <h2>L'Afrique en nous,<br><span>la force en chacun</span></h2>
-    <p>Ubuntu — « Je suis parce que nous sommes »</p>
-    <a href="#histoire" class="btn btn-primary">Découvrir</a>
-    <a href="#contact" class="btn btn-outline">Rejoindre</a>
+    <p>Hekok — « Je suis parce que nous sommes »</p>
+    @include('partials.amp-adsense')
 </section>
 
 @yield('content')
 @yield('scripts')
 <footer class="footer">
-    <p>© Ubuntu Afrika</p>
+    <p>© Hekok - Banen du Benelux</p>
 </footer>
 
 </body>

@@ -53,6 +53,13 @@
 
             <div itemprop="articleBody" class="content">
                 {!!$newsArticle!!}
+                <p class="social-share">
+                    <amp-social-share type="twitter" width="45" height="33" data-param-url="{{$canonical}}"></amp-social-share>
+                    <amp-social-share type="facebook" width="45" height="33" data-attribution="254325784911610" data-param-url="{{$canonical}}"></amp-social-share>
+                    <amp-social-share type="whatsapp" width="45" height="33" data-param-url="{{$canonical}}"></amp-social-share>
+                    <amp-social-share type="linkedin" width="45" height="33" data-param-url="{{$canonical}}"></amp-social-share>
+                    <amp-social-share type="pinterest" width="45" height="33" data-param-url="{{$canonical}}"></amp-social-share>
+                </p>
             </div>
             <em>Pour plus d'informations sur l'actualité, abonnez vous sur :
                 <a href="https://chat.whatsapp.com/CtYk9hlYGigJN4k0RDWfYG"><strong> notre chaîne WhatsApp </strong></a>

@@ -305,4 +305,9 @@ class Helper
         //dd($clef);
         return $clef;
     }
+    public static  function getAmpUrl($url){
+        $parts =parse_url($url);
+        dd(env("AMP_URL")."/amp".$parts["path"]);
+        return env("AMP_URL")."/amp".$parts["path"];
+    }
 }

@@ -21,7 +21,8 @@
     $published_time=\Carbon\Carbon::parse($article['datearticle'])->format('Y-m-d\TH:i:s+00:00');
     $titre=\App\Helpers\Helper::getTitle($article['countries']['pays'],$article['titre']);
     $title=$titre;
-    $canonical=\App\Helpers\Helper::remove_amp_from_url($canonical);
+    //$canonical=\App\Helpers\Helper::remove_amp_from_url($canonical);
+    //$canonical=\App\Helpers\Helper::remove_amp_from_url($canonical);
     $newsArticle=\App\Helpers\Helper::convertImgToAmpImg($article['article']);
     $newsArticle=\App\Helpers\Helper::convertYoutubeToAmp($newsArticle);
 @endphp
