@@ -60,4 +60,7 @@ class ArticleService
     function getAllBanen(){
         return $this->articleRepository->getAllBanen();
     }
+    function getSameRubrique($typearticle,$id){
+        return $this->articleRepository->getSameRubrique($typearticle,$id);
+    }
 }

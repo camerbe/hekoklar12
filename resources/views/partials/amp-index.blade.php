@@ -51,6 +51,7 @@
 
     </div>
 </section>
+
 <div class="news-item">
     <nav>
         <ul class="pagination">
@@ -89,6 +90,19 @@
         </ul>
     </nav>
 </div>
+<div class="divider-gold">
+    <span>Communautés</span>
+</div>
+@include('partials.amp-communaute')
+<div class="divider-gold">
+    <span>Culture</span>
+</div>
+@include('partials.amp-culture')
+<div class="divider-gold">
+    <span>Vidéo</span>
+</div>
+@include('partials.amp-youtube')
 <script type="application/ld+json">
     {!! json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
 </script>
+

@@ -210,5 +210,13 @@ class ArticleRepository extends Repository implements IArticleRepository
 
         return $articles;
     }
+    public function getSameRubrique($typearticle,$id){
+        $sameRubrique=Article::with(['countries', 'typenews'])
+            ->whereHas('typenews',fn($query)=> $query->where('slug',$typearticle)
+        )->where('id', '!=', $id)
+            ->limit(5)
+            ->orderByDesc('datearticle')->get();
 
+        return ArticleResource::collection($sameRubrique)->resolve();
+    }
 }

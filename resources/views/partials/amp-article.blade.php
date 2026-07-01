@@ -64,7 +64,7 @@
             <em>Pour plus d'informations sur l'actualité, abonnez vous sur :
                 <a href="https://chat.whatsapp.com/CtYk9hlYGigJN4k0RDWfYG"><strong> notre chaîne WhatsApp </strong></a>
             </em>
-
+            @include('partials.amp-samerubrique')
         </div>
     </article>
 
@@ -72,4 +72,5 @@
         {!! json_encode($jsonLdArticle, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
     </script>
 </section>
+
 

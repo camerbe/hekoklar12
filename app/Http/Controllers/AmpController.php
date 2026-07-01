@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Http\Resources\ArticleResource;
+use App\Http\Resources\VideoResource;
 use App\Services\ArticleService;
 use App\Services\MembreService;
+use App\Services\VideoService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -16,14 +18,27 @@ class AmpController extends Controller
     //
     protected $articleService;
     protected $membreService;
+    protected $videoService;
+    protected $communautes;
+    protected $cultures;
+    protected $video;
     /**
      * @param $articleService
      * @param $membreService
      */
-    public function __construct(ArticleService  $articleService,MembreService $membreService)
+    public function __construct(
+        ArticleService  $articleService,
+        MembreService $membreService,
+        VideoService $videoService
+    )
     {
         $this->articleService = $articleService;
         $this->membreService = $membreService;
+        $this->videoService = $videoService;
+
+        $this->communautes=ArticleResource::collection($this->articleService->getCommunaute());
+        $this->cultures=ArticleResource::collection($this->articleService->getCultureBanen());
+        $this->video= new VideoResource($this->videoService->getRandomVideo()->first());
     }
     public function index(Request $request){
         $perPage = 10;
@@ -96,10 +111,14 @@ class AmpController extends Controller
             "itemListElement" => $listElements
         ];
 
+
         return view('index', [
             'articles' => $paginated,
             'listElements' => $listElements,
-            'jsonLd' => $jsonLd
+            'jsonLd' => $jsonLd,
+            'communautes'=>$this->communautes,
+            'cultures'=>$this->cultures,
+            'video'=>$this->video
         ]);
     }
 
@@ -108,7 +127,9 @@ class AmpController extends Controller
 
         $data=$this->articleService->getBySlug($slug);
         $data=new ArticleResource($data);
-
+        $samerubrique=$this->articleService->getSameRubrique($data['typenews']['slug'],$data['id']);
+        //dd($data['typenews']['slug']);
+        //$sameRubrique=$this->articleService->
         $imageUrl=Helper::extractImgSrc($data['image']);
         //dd($data);
         $typeArticle=(strtolower($data['typenews']['typearticle'])=='article')? 'article' : 'communaute';
@@ -185,7 +206,7 @@ class AmpController extends Controller
         return view('index1', [
             'article' => $data,
             'jsonLdArticle' => $jsonLdArticle,
-            //'jsonLd' => $jsonLd
+            'related' => $samerubrique
         ]);
     }
 
