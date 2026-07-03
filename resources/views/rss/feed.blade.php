@@ -6,6 +6,7 @@
      xmlns:media="http://search.yahoo.com/mrss/">
     <channel>
         <title>Le flux rss de hekok.org</title>
+        <link>https://www.hekok.org/</link>
         <description><![CDATA[Hekok.org, Le Munen en nous, la force en chacun ]]></description>
         <language>fr-FR</language>
         <lastBuildDate>{{ now()->toRssString() }}</lastBuildDate>
@@ -34,7 +35,7 @@
                 <pubDate>{{ \Carbon\Carbon::parse($item["datearticle"])->toRssString()}}</pubDate>
                 <author>{{$auteur}}</author>
                 <category>{{ $rub }}</category>
-                <enclosure url="{{ $image }}" type="webp" length="" />
+                <enclosure url="{{ $image }}" type="webp" length="1250" />
                 <media:thumbnail url="{{ $image }}" />
             </item>
         @endforeach

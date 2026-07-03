@@ -4,10 +4,12 @@
      xmlns:atom="http://www.w3.org/2005/Atom"
      xmlns:content="http://purl.org/rss/1.0/modules/content/"
      xmlns:media="http://search.yahoo.com/mrss/">
-    <channel>
+    <link>
         <title>Le flux rss de hekok.org</title>
+        <link>https://www.hekok.org/</link>
         <description><![CDATA[Hekok.org, Le Munen en nous, la force en chacun ]]></description>
         <language>fr-FR</language>
+
         <lastBuildDate>{{ now()->toRssString() }}</lastBuildDate>
         <atom:link href="{{ url('/') }}/rss" rel="self" type="application/rss+xml" />
         <atom:link href="https://pubsubhubbub.appspot.com/" rel="hub"/>
@@ -34,7 +36,7 @@
                 <pubDate>{{ \Carbon\Carbon::parse($item["datearticle"])->toRssString()}}</pubDate>
                 <author>{{$auteur}}</author>
                 <category>{{ $rub }}</category>
-                <enclosure url="{{ $image }}" type="webp" length="" />
+                <enclosure url="{{ $image }}" type="webp" length="1250" />
                 <media:thumbnail url="{{ $image }}" />
             </item>
         @endforeach
