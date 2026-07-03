@@ -4,7 +4,7 @@
      xmlns:atom="http://www.w3.org/2005/Atom"
      xmlns:content="http://purl.org/rss/1.0/modules/content/"
      xmlns:media="http://search.yahoo.com/mrss/">
-    <link>
+    <channel>
         <title>Le flux rss de hekok.org</title>
         <link>https://www.hekok.org/</link>
         <description><![CDATA[Hekok.org, Le Munen en nous, la force en chacun ]]></description>
