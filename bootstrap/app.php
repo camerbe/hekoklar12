@@ -1,6 +1,7 @@
 <?php
 
 use App\Console\Commands\SlugUpdCommand;
+use App\Http\Middleware\RewriteAuthHeader;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         SlugUpdCommand::class,
     ])
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->prepend(RewriteAuthHeader::class);
         $middleware->preventRequestForgery(except: [
             'laravel-filemanager/*',
             'filemanager/*',
