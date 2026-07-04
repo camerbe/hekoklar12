@@ -28,7 +28,7 @@ use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 Route::post('/login',[AuthenticatedSessionController::class,'store'])->name('login');
 Route::post('/forgot-password',[PasswordResetLinkController::class,'store'])->name('forgot-password');
 Route::post('/reset-password',[NewPasswordController::class,'store'])->name('reset-password');
-Route::get('/sanctum/csrf-cookie ',[CsrfCookieController::class,'show'])->name('sanctum.csrf-cookie');
+Route::get('/sanctum/csrf-cookie',[CsrfCookieController::class,'show'])->name('sanctum.csrf-cookie');
 
 
 Route::prefix('articles')->controller(ArticleController::class)->group(function () {
