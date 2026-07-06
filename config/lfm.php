@@ -18,7 +18,8 @@ return [
     'use_package_routes'       => true,
 
     //Middlewares to be applied to default routes when use_package_routes is true
-    'middlewares'              => ['web','sanctum:auth'],
+    //'middlewares'              => ['web','sanctum:auth'],
+    'middlewares'              => ['web','auth'],
 
     //The url prefix to this package.
     'url_prefix'               => 'laravel-filemanager',
