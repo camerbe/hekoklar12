@@ -20,20 +20,14 @@ use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 //use Laravel\Fortify\Http\Controllers\VerifyEmailController;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
+use UniSharp\LaravelFilemanager\Lfm;
 
 /*Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');*/
 
 
-Route::get('/debug-headers', function (Illuminate\Http\Request $request) {
-    return response()->json([
-        'authorization_header' => $request->header('Authorization'),
-        'server_http_authorization' => $_SERVER['HTTP_AUTHORIZATION'] ?? null,
-        'server_redirect_http_authorization' => $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? null,
-        'all_headers' => getallheaders(),
-    ]);
-});
+
 
 Route::post('/login',[AuthenticatedSessionController::class,'store'])->name('login');
 Route::post('/forgot-password',[PasswordResetLinkController::class,'store'])->name('forgot-password');
@@ -114,7 +108,7 @@ Route::group(['middleware' => 'auth:sanctum'], function (){
         ]);
     })->middleware(['throttle:6,1']);
 
-
+    Lfm::routes();
 
 });
 

@@ -25,6 +25,6 @@ Route::prefix('rss')->controller(RssController::class)->group(function () {
 Route::get('/sitemapindex.xml', [SitemapArticleController::class, 'index'])->name('sitemap.index');
 
 
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+/*Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
-});
+});*/

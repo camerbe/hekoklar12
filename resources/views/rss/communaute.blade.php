@@ -11,7 +11,7 @@
         <language>fr-FR</language>
 
         <lastBuildDate>{{ now()->toRssString() }}</lastBuildDate>
-        <atom:link href="{{ url('/') }}/rss" rel="self" type="application/rss+xml" />
+        <atom:link href="{{ url('/') }}/api/rss" rel="self" type="application/rss+xml" />
         <atom:link href="https://pubsubhubbub.appspot.com/" rel="hub"/>
         @foreach($items as $item)
             @php
