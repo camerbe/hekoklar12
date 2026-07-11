@@ -18,12 +18,18 @@
                 //dd($image);
                  $auteur=str_replace("&", "et", $item["auteur"]);
                  $rub=strtolower($item["typearticles"]["typearticle"]);
-                 echo $rub;
+                 switch ($rub)
+                 {
+                     case 'langue' :
+                     case 'territoire' :
+                     case 'peuple banen' :
+                         $rub='communautes';
+                 }
                  $titre=App\Helpers\Helper::getTitle($item["countries"]["pays"],$item["titre"]);
             @endphp
             <item>
                 <title><![CDATA[{{ $titre }}]]></title>
-                <link>{{ env('APP_URL') . $rub.'/'.$item["slug"] }}</link>
+                <link>{{ url('/' . $rub.'/'.$item["slug"]) }}</link>
                 <description>
                     <![CDATA[
                     <p>{!! $item["chapeau"] !!}</p>
