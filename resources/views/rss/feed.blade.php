@@ -18,7 +18,7 @@
                 //dd($image);
                  $auteur=str_replace("&", "et", $item["auteur"]);
                  $rub=strtolower($item["typearticles"]["typearticle"]);
-                 $rub=str_replace($rub,'actualites');
+                 $rub=str_replace($rub,'actualites',$rub);
                  $titre=App\Helpers\Helper::getTitle($item["countries"]["pays"],$item["titre"]);
             @endphp
             <item>
