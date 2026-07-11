@@ -11,7 +11,7 @@
         <language>fr-FR</language>
 
         <lastBuildDate>{{ now()->toRssString() }}</lastBuildDate>
-        <atom:link href="{{ url('/') }}/api/rss" rel="self" type="application/rss+xml" />
+        <atom:link href="{{ url('/') }}/rss/communaute" rel="self" type="application/rss+xml" />
         <atom:link href="https://pubsubhubbub.appspot.com/" rel="hub"/>
         @foreach($items as $item)
             @php
@@ -19,11 +19,18 @@
                 //dd($image);
                  $auteur=str_replace("&", "et", $item["auteur"]);
                  $rub=strtolower($item["typearticles"]["typearticle"]);
+                 switch ($rub)
+                 {
+                     case 'ndikiniméki' :
+                     case 'yingui' :
+                     case 'nitoukou' :
+                         $rub='communautes';
+                 }
                  $titre=App\Helpers\Helper::getTitle($item["countries"]["pays"],$item["titre"]);
             @endphp
             <item>
                 <title><![CDATA[{{ $titre }}]]></title>
-                <link>{{ url('/' . $rub.'/'.$item["slug"]) }}</link>
+                <link>{{ env('FRONTEND_URL').'/' . $rub.'/'.$item["slug"] }}</link>
                 <description>
                     <![CDATA[
                     <p>{!! $item["chapeau"] !!}</p>
