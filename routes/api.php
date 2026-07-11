@@ -108,7 +108,7 @@ Route::group(['middleware' => 'auth:sanctum'], function (){
         ]);
     })->middleware(['throttle:6,1']);
 
-    Lfm::routes();
+    //Lfm::routes();
 
 });
 
