@@ -29,7 +29,7 @@
             @endphp
             <item>
                 <title><![CDATA[{{ $titre }}]]></title>
-                <link>{{ url('/' . $rub.'/'.$item["slug"]) }}</link>
+                <link>{{ env('FRONTEND_URL').'/' . $rub.'/'.$item["slug"] }}</link>
                 <description>
                     <![CDATA[
                     <p>{!! $item["chapeau"] !!}</p>
