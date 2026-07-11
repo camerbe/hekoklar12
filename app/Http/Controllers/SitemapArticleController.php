@@ -26,9 +26,10 @@ class SitemapArticleController extends Controller
         $sitemap=Sitemap::create();
         foreach ($articles as $article){
             $rub=strtolower($article["typearticles"]["typearticle"]);
+            $rub=str_replace($rub,'actualites',$rub);
             $image=$article["image"] ?? 'https://picsum.photos/850/600';
             $sitemap->add(
-                Url::create("/{$rub}/{$article['slug']}")
+                Url::create(env('FRONTEND_URL')."/{$rub}/{$article['slug']}")
                 ->setLastModificationDate(Carbon::parse($article["datearticle"]))
                 ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
                 ->setPriority(0.8)
